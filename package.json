@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/EcutDavid/node-deps-graph#readme",
   "dependencies": {
+    "commander": "^2.15.1",
     "semver": "^5.5.0"
   }
 }

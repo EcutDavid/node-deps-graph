@@ -1,8 +1,23 @@
 'use strict';
 
 const { spawnSync } = require('child_process');
+const program = require('commander');
 const fs = require('fs');
 const semver = require('semver');
+
+program
+  .version('1.0.0')
+  .option('-p --package [value]', 'Package name')
+  .option('-f --filepath [value]', 'package.json file path')
+  .option('-o --output [value]', 'reports\' file path')
+  .parse(process.argv);
+
+console.log(program.package, program.filepath)
+if (!program.package && !program.filepath) {
+  console.warn('Neither package name nor package.json file path sepecified, exit :(')
+  process.exit();
+}
+const OUTPUT_PATH = program.output || './report.json';
 
 function parseRepo(name, version) {
   console.log(`parsing ${name}`);
@@ -50,5 +65,18 @@ function crawl(packages) {
   return results;
 }
 
-const results = crawl([{ name: 'react' }]);
-fs.writeFileSync('./report.json', JSON.stringify(results, null, '\t'));
+if (program.package) {
+  const results = crawl([{ name: program.package }]);
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(results, null, '\t'));
+} else {
+  const appMeta = JSON.parse(fs.readFileSync(program.filepath));
+  const targets = [];
+  for (let dep in appMeta.dependencies) {
+    targets.push({ name: dep, version: appMeta.dependencies[dep] });
+  }
+  const app = { name: appMeta.name, deps: targets.map(d => d.name) };
+  const results = crawl(targets);
+  results.push(app);
+
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(results, null, '\t'));
+}
