@@ -1,0 +1,27 @@
+{
+  "name": "deps-graph",
+  "version": "1.0.0",
+  "description": "A tool that crawls node app's dependencies from the provided package.json or package name.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EcutDavid/node-deps-graph.git"
+  },
+  "keywords": [
+    "dependencies",
+    "crawl",
+    "graph"
+  ],
+  "author": "David Guan(davidguandev@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EcutDavid/node-deps-graph/issues"
+  },
+  "homepage": "https://github.com/EcutDavid/node-deps-graph#readme",
+  "dependencies": {
+    "semver": "^5.5.0"
+  }
+}
