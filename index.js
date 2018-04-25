@@ -12,7 +12,6 @@ program
   .option('-o --output [value]', 'reports\' file path')
   .parse(process.argv);
 
-console.log(program.package, program.filepath)
 if (!program.package && !program.filepath) {
   console.warn('Neither package name nor package.json file path sepecified, exit :(')
   process.exit();
